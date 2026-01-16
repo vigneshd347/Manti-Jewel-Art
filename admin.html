@@ -257,7 +257,24 @@
                             <label>Total Price (₹)</label>
                             <input type="number" id="prod-price" class="form-control" placeholder="0" readonly
                                 style="background:rgba(0,0,0,0.3); cursor:not-allowed;">
-                            <small style="color:#aaa; font-size:0.8rem;">(Rate × Weight) + MC + 3% GST</small>
+
+                            <!-- Price Breakdown Display -->
+                            <div id="price-breakdown"
+                                style="margin-top:0.5rem; font-size:0.85rem; color:#ccc; display:none;">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span>Base (Wt × Rate):</span>
+                                    <span id="bd-metal">₹0</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span>Making Charges:</span>
+                                    <span id="bd-mc">₹0</span>
+                                </div>
+                                <div
+                                    style="display:flex; justify-content:space-between; color:var(--color-accent-gold);">
+                                    <span>GST (3%):</span>
+                                    <span id="bd-gst">₹0</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group" style="flex:1">
                             <label>Image</label>

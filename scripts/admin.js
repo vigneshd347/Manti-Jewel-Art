@@ -124,10 +124,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!prodPrice) return;
 
         const metal = prodMetal.value;
+        const breakdownEl = document.getElementById('price-breakdown');
+
         if (metal === 'manual') {
             prodPrice.readOnly = false;
             prodPrice.style.background = 'rgba(255,255,255,0.05)';
             prodPrice.style.cursor = 'text';
+            if (breakdownEl) breakdownEl.style.display = 'none';
             return;
         }
 
@@ -135,6 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         prodPrice.readOnly = true;
         prodPrice.style.background = 'rgba(0,0,0,0.3)';
         prodPrice.style.cursor = 'not-allowed';
+        if (breakdownEl) breakdownEl.style.display = 'block';
 
         // Get Live Rate from the inputs on the left
         const rateId = `input-${metal.replace('_', '-')}`; // e.g. input-gold-24k
@@ -144,11 +148,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const mc = parseFloat(prodMC.value) || 0;
 
         // FORMULA: (Rate * Weight) + MC + 3% GST
-        const baseTotal = (liveRate * weight) + mc;
+        const metalCost = liveRate * weight;
+        const baseTotal = metalCost + mc;
         const gst = baseTotal * 0.03; // 3%
         const finalTotal = baseTotal + gst;
 
         prodPrice.value = Math.round(finalTotal);
+
+        // Update Breakdown
+        if (breakdownEl) {
+            document.getElementById('bd-metal').textContent = `₹${Math.round(metalCost).toLocaleString()}`;
+            document.getElementById('bd-mc').textContent = `₹${Math.round(mc).toLocaleString()}`;
+            document.getElementById('bd-gst').textContent = `₹${Math.round(gst).toLocaleString()}`;
+        }
     }
 
     if (prodMetal && prodWeight && prodMC) {
