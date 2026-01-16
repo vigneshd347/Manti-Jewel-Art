@@ -369,3 +369,78 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
+
+// --- LIVE RATE FETCHING ---
+// --- LIVE RATE FETCHING ---
+async function fetchLiveRates() {
+    const goldInput24 = document.getElementById('input-gold-24k');
+    const goldInput22 = document.getElementById('input-gold-22k');
+    const silverInput = document.getElementById('input-silver');
+
+    // 1. Get API Key
+    let apiKey = localStorage.getItem('gold_api_key');
+    if (!apiKey) {
+        apiKey = prompt("Enter your GoldAPI.io API Key (Free):");
+        if (apiKey) localStorage.setItem('gold_api_key', apiKey);
+    }
+    if (!apiKey) return;
+
+    // 2. Fetch Data
+    const btn = document.getElementById('fetch-live-btn');
+    var originalText = '';
+    if (btn) {
+        originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching...';
+        btn.disabled = true;
+    }
+
+    try {
+        // Fetch Gold (XAU) in INR
+        const goldRes = await fetch('https://www.goldapi.io/api/XAU/INR', {
+            headers: { 'x-access-token': apiKey, 'Content-Type': 'application/json' }
+        });
+
+        if (goldRes.status === 403 || goldRes.status === 401) throw new Error("Invalid API Key");
+        if (!goldRes.ok) throw new Error("Failed to fetch Gold rate.");
+        const goldData = await goldRes.json();
+
+        // Fetch Silver (XAG) in INR
+        const silverRes = await fetch('https://www.goldapi.io/api/XAG/INR', {
+            headers: { 'x-access-token': apiKey, 'Content-Type': 'application/json' }
+        });
+
+        if (!silverRes.ok) throw new Error("Failed to fetch Silver rate.");
+        const silverData = await silverRes.json();
+
+        const pricePerOunceGold = goldData.price;
+        const pricePerOunceSilver = silverData.price;
+
+        const pricePer10gGold = (pricePerOunceGold / 31.1035) * 10;
+        const pricePer1kgSilver = (pricePerOunceSilver / 31.1035) * 1000;
+
+        // Update Inputs
+        if (goldInput24) goldInput24.value = Math.round(pricePer10gGold);
+        if (goldInput22) goldInput22.value = Math.round(pricePer10gGold * 0.916);
+        if (silverInput) silverInput.value = Math.round(pricePer1kgSilver);
+
+        alert("Rates Fetched Successfully!");
+
+    } catch (err) {
+        console.error(err);
+        alert(`Error: ${err.message}`);
+        if (err.message.includes("API Key") || err.message.includes("401")) {
+            localStorage.removeItem('gold_api_key');
+        }
+    } finally {
+        if (btn) {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+}
+
+// Bind to button safely
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('fetch-live-btn');
+    if (btn) btn.addEventListener('click', fetchLiveRates);
+});

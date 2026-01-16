@@ -204,7 +204,12 @@
                             <input type="number" id="input-silver" class="form-control" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="margin-top:1rem;">Update Rates</button>
+                    <div style="display:flex; gap:1rem; margin-top:1rem;">
+                        <button type="button" id="fetch-live-btn" class="btn btn-outline" style="flex:1;">
+                            <i class="fas fa-sync-alt"></i> Fetch Live
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="flex:1;">Update Rates</button>
+                    </div>
                     <div id="status-message" class="status-msg"></div>
                 </form>
             </div>
