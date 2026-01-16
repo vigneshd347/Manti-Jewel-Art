@@ -190,121 +190,119 @@
             </div>
             <div class="accordion-body">
                 <form id="rates-form">
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <div class="form-group" style="flex:1">
-                            <label>Gold 24K (₹)</label>
-                            <input type="number" id="input-gold-24k" class="form-control" required>
-                        </div>
-                        <div class="form-group" style="flex:1">
-                            <label>Gold 22K (₹)</label>
-                            <input type="number" id="input-gold-22k" class="form-control" required>
-                        </div>
-                        <div class="form-group" style="flex:1">
-                            <label>Silver 1kg (₹)</label>
-                            <input type="number" id="input-silver" class="form-control" required>
-                        </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Gold 24K</label>
+                        <input type="number" id="input-gold-24k" class="form-control" required>
                     </div>
-                    <div style="display:flex; gap:1rem; margin-top:1rem;">
-                        <button type="button" id="fetch-live-btn" class="btn btn-outline" style="flex:1;">
-                            <i class="fas fa-sync-alt"></i> Fetch Live
-                        </button>
-                        <button type="submit" class="btn btn-primary" style="flex:1;">Update Rates</button>
+                    <div class="form-group" style="flex:1">
+                        <label>Gold 22K</label>
+                        <input type="number" id="input-gold-22k" class="form-control" required>
                     </div>
-                    <div id="status-message" class="status-msg"></div>
-                </form>
+                    <div class="form-group" style="flex:1">
+                        <label>Silver</label>
+                        <input type="number" id="input-silver" class="form-control" required>
+                    </div>
             </div>
+            <div style="display:flex; gap:1rem; margin-top:1rem;">
+                <button type="button" id="fetch-live-btn" class="btn btn-outline" style="flex:1;">
+                    <i class="fas fa-sync-alt"></i> Fetch Live
+                </button>
+                <button type="submit" class="btn btn-primary" style="flex:1;">Update Rates</button>
+            </div>
+            <div id="status-message" class="status-msg"></div>
+            </form>
         </div>
+    </div>
 
-        <!-- 2. PRODUCT UPLOAD ACCORDION -->
-        <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span><i class="fas fa-plus-circle"></i> Upload / Edit Product</span>
-                <i class="fas fa-chevron-down accordion-icon"></i>
-            </div>
-            <div class="accordion-body">
-                <form id="product-form">
+    <!-- 2. PRODUCT UPLOAD ACCORDION -->
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span><i class="fas fa-plus-circle"></i> Upload / Edit Product</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+            <form id="product-form">
+                <div class="form-group">
+                    <label>Product Title</label>
+                    <input type="text" id="prod-title" class="form-control" required
+                        placeholder="e.g. Antique Necklace">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="prod-desc" class="form-control" rows="2" placeholder="Details..."></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
-                        <label>Product Title</label>
-                        <input type="text" id="prod-title" class="form-control" required
-                            placeholder="e.g. Antique Necklace">
+                        <label>Metal Type</label>
+                        <select id="prod-metal" class="form-control" required>
+                            <option value="manual">Manual Price</option>
+                            <option value="gold_24k">Gold 24K</option>
+                            <option value="gold_22k">Gold 22K</option>
+                            <option value="silver">Silver</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="prod-desc" class="form-control" rows="2" placeholder="Details..."></textarea>
+                        <label>Weight (gms)</label>
+                        <input type="number" id="prod-weight" class="form-control" step="0.01" placeholder="0.00">
                     </div>
-
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>Metal Type</label>
-                            <select id="prod-metal" class="form-control" required>
-                                <option value="manual">Manual Price</option>
-                                <option value="gold_24k">Gold 24K</option>
-                                <option value="gold_22k">Gold 22K</option>
-                                <option value="silver">Silver</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Weight (gms)</label>
-                            <input type="number" id="prod-weight" class="form-control" step="0.01" placeholder="0.00">
-                        </div>
-                        <div class="form-group">
-                            <label>Making Charges (₹)</label>
-                            <input type="number" id="prod-mc" class="form-control" placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Size <small>(Optional)</small></label>
-                            <input type="text" id="prod-size" class="form-control" placeholder="e.g. 10 inch">
-                        </div>
+                    <div class="form-group">
+                        <label>Making Charges (₹)</label>
+                        <input type="number" id="prod-mc" class="form-control" placeholder="0">
                     </div>
+                    <div class="form-group">
+                        <label>Size <small>(Optional)</small></label>
+                        <input type="text" id="prod-size" class="form-control" placeholder="e.g. 10 inch">
+                    </div>
+                </div>
 
-                    <div class="product-row" style="margin-top: 1rem;">
-                        <div class="form-group" style="flex:1">
-                            <label>Total Price (₹)</label>
-                            <input type="number" id="prod-price" class="form-control" placeholder="0" readonly
-                                style="background:rgba(0,0,0,0.3); cursor:not-allowed;">
+                <div class="product-row" style="margin-top: 1rem;">
+                    <div class="form-group" style="flex:1">
+                        <label>Total Price (₹)</label>
+                        <input type="number" id="prod-price" class="form-control" placeholder="0" readonly
+                            style="background:rgba(0,0,0,0.3); cursor:not-allowed;">
 
-                            <!-- Price Breakdown Display -->
-                            <div id="price-breakdown"
-                                style="margin-top:0.5rem; font-size:0.85rem; color:#ccc; display:none;">
-                                <div style="display:flex; justify-content:space-between;">
-                                    <span>Base (Wt × Rate):</span>
-                                    <span id="bd-metal">₹0</span>
-                                </div>
-                                <div style="display:flex; justify-content:space-between;">
-                                    <span>Making Charges:</span>
-                                    <span id="bd-mc">₹0</span>
-                                </div>
-                                <div
-                                    style="display:flex; justify-content:space-between; color:var(--color-accent-gold);">
-                                    <span>GST (3%):</span>
-                                    <span id="bd-gst">₹0</span>
-                                </div>
+                        <!-- Price Breakdown Display -->
+                        <div id="price-breakdown"
+                            style="margin-top:0.5rem; font-size:0.85rem; color:#ccc; display:none;">
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Base (Wt × Rate):</span>
+                                <span id="bd-metal">₹0</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>Making Charges:</span>
+                                <span id="bd-mc">₹0</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; color:var(--color-accent-gold);">
+                                <span>GST (3%):</span>
+                                <span id="bd-gst">₹0</span>
                             </div>
                         </div>
-                        <div class="form-group" style="flex:1">
-                            <label>Image</label>
-                            <input type="file" id="prod-image" class="form-control" accept="image/*">
-                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="margin-top:1rem;">Upload to
-                        Gallery</button>
-                </form>
-                <div id="prod-status" class="status-msg"></div>
-            </div>
-        </div>
-
-        <!-- 3. MANAGE PRODUCTS ACCORDION -->
-        <div class="accordion-item">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span><i class="fas fa-list"></i> Existing Products</span>
-                <i class="fas fa-chevron-down accordion-icon"></i>
-            </div>
-            <div class="accordion-body">
-                <div id="product-list" class="product-grid-admin" style="padding-top:1rem;">
-                    <p style="text-align:center; color:#888;">Loading Products...</p>
+                    <div class="form-group" style="flex:1">
+                        <label>Image</label>
+                        <input type="file" id="prod-image" class="form-control" accept="image/*">
+                    </div>
                 </div>
+                <button type="submit" class="btn btn-primary w-100" style="margin-top:1rem;">Upload to
+                    Gallery</button>
+            </form>
+            <div id="prod-status" class="status-msg"></div>
+        </div>
+    </div>
+
+    <!-- 3. MANAGE PRODUCTS ACCORDION -->
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span><i class="fas fa-list"></i> Existing Products</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+            <div id="product-list" class="product-grid-admin" style="padding-top:1rem;">
+                <p style="text-align:center; color:#888;">Loading Products...</p>
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -434,8 +432,8 @@
     </style>
 
     <!-- External Scripts -->
-    <script src="scripts/config.js"></script>
-    <script src="scripts/admin.js"></script>
+    <script src="scripts/config.js?v=2"></script>
+    <script src="scripts/admin.js?v=8"></script>
 </body>
 
 </html>

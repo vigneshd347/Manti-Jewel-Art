@@ -115,11 +115,39 @@
     </nav>
 
     <!-- Header -->
-    <header class="hero" style="min-height: 40vh;">
-        <div class="container hero-container" style="justify-content: center; text-align: center;">
-            <div class="hero-text" style="max-width: 800px;">
+    <header class="hero gallery-hero" style="min-height: 40vh; flex-direction: column; gap: 2rem;">
+        <div class="container hero-container"
+            style="justify-content: center; text-align: center; flex-direction: column;">
+            <div class="hero-text" style="max-width: 800px; margin: 0 auto;">
                 <h1>Our <span class="text-gold">Collections</span></h1>
                 <p>Browse our exclusive handcrafted designs.</p>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="glass-card" style="padding: 1.5rem; width: 100%; max-width: 800px; margin-top: 1rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 200px;">
+                        <input type="text" id="search-input" placeholder="Search jewelry..."
+                            style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: #fff;">
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <select id="filter-metal"
+                            style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: #fff;">
+                            <option value="all">All Metals</option>
+                            <option value="gold_24k">Gold 24K</option>
+                            <option value="gold_22k">Gold 22K</option>
+                            <option value="silver">Silver</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <select id="sort-price"
+                            style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: #fff;">
+                            <option value="newest">Newest First</option>
+                            <option value="low-high">Price: Low to High</option>
+                            <option value="high-low">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -148,7 +176,10 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2026 Manti Jewel Art Private Limited. All Rights Reserved.</p>
+            <p>&copy; 2026 Manti Jewel Art Private Limited. All Rights Reserved.
+                <a href="login.html"
+                    style="color: rgba(255,255,255,0.3); text-decoration: none; margin-left: 10px;">Admin</a>
+            </p>
         </div>
     </footer>
 

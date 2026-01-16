@@ -282,18 +282,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 1. Upload Image (Only if selected)
             if (fileFile) {
-                const fileName = `${Date.now()}_${fileFile.name.replace(/\s/g, '_')}`;
+                showProdStatus('Uploading Image...', 'neutral');
+
+                const fileName = `${Date.now()}_${fileFile.name.replace(/\s/g, '_').replace(/[^\w.-]/g, '')}`;
+
                 const { data: uploadData, error: uploadError } = await client
                     .storage
                     .from('product-images')
-                    .upload(fileName, fileFile);
+                    .upload(fileName, fileFile, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
 
-                if (uploadError) throw uploadError;
+                if (uploadError) throw new Error("Image Upload Failed: " + uploadError.message);
 
                 const { data: urlData } = client.storage.from('product-images').getPublicUrl(fileName);
                 publicUrl = urlData.publicUrl;
             }
 
+            // 2. Prepare Database Payload
+            showProdStatus('Saving to Database...', 'neutral');
             const payload = {
                 title: title,
                 description: desc,
@@ -314,15 +322,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 dbError = error;
             } else {
                 // INSERT New
-                if (!publicUrl) throw new Error("Image required for new products");
+                if (!publicUrl) throw new Error("Image is required for new products.");
                 const { error } = await client.from('products').insert([payload]);
                 dbError = error;
             }
 
-            if (dbError) throw dbError;
+            if (dbError) throw new Error("Database Error: " + dbError.message);
 
             // Reset
-            showProdStatus(editingProductId ? 'Product Updated!' : 'Product Uploaded!', 'success');
+            showProdStatus(editingProductId ? 'Product Updated Successfully!' : 'Product Uploaded Successfully!', 'success');
+
             prodForm.reset();
             editingProductId = null;
             prodForm.querySelector('button[type="submit"]').textContent = 'Upload to Gallery';
@@ -334,6 +343,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (err) {
             console.error(err);
             showProdStatus(`Action Failed: ${err.message}`, 'error');
+            alert(`Error: ${err.message}`);
         }
     });
 
@@ -415,15 +425,19 @@ async function fetchLiveRates() {
         const pricePerOunceGold = goldData.price;
         const pricePerOunceSilver = silverData.price;
 
-        const pricePer10gGold = (pricePerOunceGold / 31.1035) * 10;
-        const pricePer1kgSilver = (pricePerOunceSilver / 31.1035) * 1000;
+        // Calculate Price per 1 GRAM
+        const pricePer1gGold = (pricePerOunceGold / 31.1035);
+        const pricePer1gSilver = (pricePerOunceSilver / 31.1035);
 
-        // Update Inputs
-        if (goldInput24) goldInput24.value = Math.round(pricePer10gGold);
-        if (goldInput22) goldInput22.value = Math.round(pricePer10gGold * 0.916);
-        if (silverInput) silverInput.value = Math.round(pricePer1kgSilver);
+        // IMPORT DUTY & PREMIUM ADJUSTMENT (1.10x)
+        const TAX_MULTIPLIER = 1.10;
 
-        alert("Rates Fetched Successfully!");
+        // Update Inputs (Rounded to nearest rupee)
+        if (goldInput24) goldInput24.value = Math.round(pricePer1gGold * TAX_MULTIPLIER);
+        if (goldInput22) goldInput22.value = Math.round((pricePer1gGold * 0.916) * TAX_MULTIPLIER);
+        if (silverInput) silverInput.value = Math.round(pricePer1gSilver * TAX_MULTIPLIER);
+
+        alert("Rates Fetched Successfully! (Per Gram)");
 
     } catch (err) {
         console.error(err);

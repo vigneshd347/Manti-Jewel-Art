@@ -350,7 +350,9 @@ img {
     font-weight: 700;
     color: #fff;
     margin: 0.5rem 0;
-    font-family: var(--font-heading);
+    font-family: 'Courier New', Courier, monospace;
+    /* Numeric styling */
+    letter-spacing: -1px;
 }
 
 .trend {
@@ -426,6 +428,7 @@ footer {
         font-size: 2.5rem;
     }
 
+    /* Navigation */
     .nav-links {
         position: fixed;
         top: var(--nav-height);
@@ -448,8 +451,11 @@ footer {
         display: block;
     }
 
+    /* Hero */
     .hero {
         padding-top: calc(var(--nav-height) + 2rem);
+        padding-bottom: 3rem;
+        min-height: auto;
     }
 
     .hero-container {
@@ -458,10 +464,129 @@ footer {
     }
 
     .hero-btns {
-        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 2rem auto 0;
     }
 
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Values & Icons */
     .values-section .container {
         flex-direction: column;
     }
+
+    .value-card i {
+        font-size: 2rem;
+        /* Reduced from 2.5rem */
+    }
+
+    /* Live Rates */
+    .rates-grid {
+        grid-template-columns: 1fr;
+        /* Stack vertically */
+        gap: 1rem;
+    }
+
+    .rate-card .rate-value {
+        font-size: 1.75rem;
+        /* Prevent overflow */
+    }
+
+    /* Admin Panel Mobile Fixes */
+    .admin-container {
+        padding: 1rem;
+    }
+
+    /* Force horizontal groups to stack */
+    #rates-form>div[style*="display: flex"],
+    #product-form>div[style*="display:grid"] {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1rem !important;
+        grid-template-columns: 1fr !important;
+    }
+
+    .form-group {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    /* Stack Admin Buttons */
+    .btn-group-responsive,
+    #rates-form button[type="submit"],
+    #rates-form div[style*="display:flex"] {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #rates-form button {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Gallery */
+    .gallery-hero {
+        padding: 6rem 0 3rem !important;
+        /* Fix excessive padding */
+    }
+}
+/* --- Compact Admin Dashboard Styles --- */
+.admin-dashboard {
+    max-width: 800px;
+    margin: 6rem auto 2rem; /* Reduced top margin */
+    padding: 0 1rem;
+}
+
+.accordion-item {
+    margin-bottom: 0.5rem; /* Tighter items */
+    border: 1px solid var(--color-glass-border);
+    background: var(--color-glass-bg);
+}
+
+.accordion-header {
+    padding: 0.75rem 1rem; /* Compact header */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-body {
+    padding: 1rem; /* Reduced padding from likely 2rem */
+    display: none;
+}
+
+.accordion-item.active .accordion-body {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 0.75rem; /* Reduced from 1rem+ */
+}
+
+.form-control {
+    padding: 0.5rem; /* Compact inputs */
+    font-size: 0.95rem;
+}
+
+/* Rate Cards in Admin */
+.rate-card {
+    padding: 1rem; /* Reduced size */
+    margin-bottom: 1rem;
+}
+
+.rate-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.6rem 1.2rem; /* Slightly more compact */
 }
