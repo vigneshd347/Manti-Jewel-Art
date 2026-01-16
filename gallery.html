@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections | Manti Jewel Art</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase (UMD) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+    <style>
+        /* Gallery Specific Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent-gold);
+        }
+
+        .product-img-wrapper {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-family: var(--font-heading);
+            color: var(--color-accent-gold);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 4rem;
+            color: var(--color-text-muted);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                Manti <span class="text-gold">Jewel Art</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#rates">Live Rates</a>
+                <a href="#" class="active">Collections</a>
+                <a href="index.html#contact" class="btn btn-primary">Contact Us</a>
+            </div>
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="hero" style="min-height: 40vh;">
+        <div class="container hero-container" style="justify-content: center; text-align: center;">
+            <div class="hero-text" style="max-width: 800px;">
+                <h1>Our <span class="text-gold">Collections</span></h1>
+                <p>Browse our exclusive handcrafted designs.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Section -->
+    <section class="container" style="padding-bottom: 4rem;">
+        <div id="gallery-container" class="gallery-grid">
+            <div class="loading-spinner">
+                <i class="fas fa-circle-notch fa-spin text-gold"></i> Loading Products...
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>Manti Jewel Art Private Limited</h3>
+                <p>Crafting memories in gold and silver.</p>
+            </div>
+            <div class="footer-contact">
+                <p><i class="fas fa-phone-alt text-gold"></i> <a href="tel:+919092727655" style="color:inherit;">+91
+                        90927 27655</a></p>
+                <p><i class="fas fa-envelope text-gold"></i> <a href="mailto:support@amanties.com"
+                        style="color:inherit;">support@amanties.com</a></p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Manti Jewel Art Private Limited. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <!-- External Scripts -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/gallery.js"></script>
+</body>
+
+</html>

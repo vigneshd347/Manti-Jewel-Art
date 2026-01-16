@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manti Jewel Art | Premium Gold & Silver</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase Client (UMD for Browser) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                Manti <span class="text-gold">Jewel Art Private Limited</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#rates">Live Rates</a>
+                <a href="gallery.html">Collections</a>
+                <a href="#contact" class="btn btn-primary">Contact Us</a>
+            </div>
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <span class="subtitle">Est. 1995</span>
+                <h1>Exquisite Design. <br>Timeless <span class="text-gold">Elegance.</span></h1>
+                <p>Discover the finest collection of handcrafted gold and silver jewelry, where tradition meets modern
+                    artistry.</p>
+                <div class="hero-btns">
+                    <a href="#collections" class="btn btn-primary">View Collections</a>
+                    <a href="#rates" class="btn btn-outline">Check Live Rates</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Abstract Decorative Circle -->
+                <div class="glowing-circle"></div>
+                <!-- Placeholder for Hero Image -->
+                <div class="image-wrapper glass-card">
+                    <i class="fas fa-gem fa-5x text-gold"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Live Rates Ticker (Placeholder) -->
+    <section id="rates" class="rates-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Live Market Rates</h2>
+                <div class="live-dot"></div>
+            </div>
+            <div class="rates-grid">
+                <div class="rate-card glass-card">
+                    <div class="icon"><i class="fas fa-coins text-gold"></i></div>
+                    <h3>Gold (24K)</h3>
+                    <p class="rate-value" id="price-gold-24k">Loading...</p>
+                    <span class="trend up"><i class="fas fa-arrow-up"></i> +0.5%</span>
+                </div>
+                <div class="rate-card glass-card">
+                    <div class="icon"><i class="fas fa-ring text-gold"></i></div>
+                    <h3>Gold (22K)</h3>
+                    <p class="rate-value" id="price-gold-22k">Loading...</p>
+                    <span class="trend down"><i class="fas fa-arrow-down"></i> -0.2%</span>
+                </div>
+                <div class="rate-card glass-card">
+                    <div class="icon"><i class="fas fa-bars text-gold"></i></div>
+                    <h3>Silver (1kg)</h3>
+                    <p class="rate-value" id="price-silver">Loading...</p>
+                    <span class="trend stable"><i class="fas fa-minus"></i> 0.0%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="values-section">
+        <div class="container">
+            <div class="value-card">
+                <i class="fas fa-certificate text-gold"></i>
+                <h4>Certified Purity</h4>
+                <p>100% BIS Hallmarked. GST & MSME Registered.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-hammer text-gold"></i>
+                <h4>Handcrafted</h4>
+                <p>Designed by master artisans with decades of experience.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-sync text-gold"></i>
+                <h4>Lifetime Exchange</h4>
+                <p>Transparent exchange policies for your peace of mind.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>Manti Jewel Art Private Limited</h3>
+                <p>Crafting memories in gold and silver.</p>
+            </div>
+            <div class="footer-contact">
+                <p><i class="fas fa-phone-alt text-gold"></i> <a href="tel:+919092727655" style="color:inherit;">+91
+                        90927 27655</a></p>
+                <p><i class="fas fa-envelope text-gold"></i> <a href="mailto:support@amanties.com"
+                        style="color:inherit;">support@amanties.com</a></p>
+                <p><i class="fas fa-globe text-gold"></i> <a href="https://www.amanties.com" target="_blank"
+                        style="color:inherit;">www.amanties.com</a></p>
+                <p><i class="fas fa-map-marker-alt text-gold"></i> No 12/189, PRV Complex, Vannan Kovil
+                    Junction,<br>Mettupalayam Rd, Coimbatore, Tamil Nadu 641047</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 Manti Jewel Art Private Limited. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- External Scripts -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/api.js"></script>
+</body>
+
+</html>
