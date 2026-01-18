@@ -1,8 +1,8 @@
 [build]
   publish = "."
-  command = ""
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Optional: Map 404 to index if you want, but for now let's keep it standard.
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
