@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Manti Jewel Art</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <h2
+                    style="font-family:'Playfair Display', serif; font-size:1.5rem; color:var(--color-accent-gold); margin:0; letter-spacing:1px;">
+                    MANTI JEWEL ART</h2>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Shop</a>
+                <a href="cart.html" class="cart-link"><i class="fas fa-shopping-cart"></i> Cart <span
+                        id="cart-count">0</span></a>
+            </div>
+            <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <!-- Product Section -->
+    <section class="container" style="padding: 4rem 1rem; min-height:80vh;">
+        <div id="product-details" class="product-details-container">
+            <div class="loading-spinner"><i class="fas fa-circle-notch fa-spin text-gold"></i> Loading Product...</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <p>&copy; 2026 Manti Jewel Art. All Rights Reserved.</p>
+    </footer>
+
+    <style>
+        .product-details-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .pd-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .pd-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent-gold);
+        }
+
+        .pd-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .pd-meta {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .pd-meta strong {
+            color: var(--color-accent-gold);
+        }
+
+        .btn-add-cart {
+            background: var(--color-accent-gold);
+            color: black;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            background: #d4a017;
+        }
+
+        @media(max-width: 768px) {
+            .product-details-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="scripts/supabase.js"></script>
+    <script src="scripts/cart.js"></script>
+    <script>
+        // Logic to Fetch Product Details
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+
+            if (!productId) {
+                window.location.href = 'gallery.html';
+                return;
+            }
+
+            const { data: product, error } = await supabase.from('products').select('*').eq('id', productId).single();
+
+            const container = document.getElementById('product-details');
+            if (error || !product) {
+                container.innerHTML = `<p>Product not found.</p>`;
+                return;
+            }
+
+            // Render
+            container.innerHTML = `
+                <div class="pd-image">
+                    <img src="${product.image_url}" alt="${product.title}">
+                </div>
+                <div class="pd-info">
+                    <h1>${product.title}</h1>
+                    <div class="pd-price">₹ ${product.price}</div>
+                    <p class="pd-desc">${product.description}</p>
+                    
+                    <div class="pd-meta">
+                        ${product.metal_type !== 'manual' ? `<div><strong>Metal:</strong> ${product.metal_type.replace('_', ' ').toUpperCase()}</div>` : ''}
+                        ${product.weight ? `<div><strong>Weight:</strong> ${product.weight}g</div>` : ''}
+                        ${product.size ? `<div><strong>Size:</strong> ${product.size}</div>` : ''}
+                    </div>
+
+                    <button onclick="addToCart('${product.id}')" class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            `;
+        });
+    </script>
+</body>
+
+</html>

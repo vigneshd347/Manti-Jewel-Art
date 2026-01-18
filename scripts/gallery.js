@@ -49,10 +49,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             return `
                 <div class="product-card glass-card">
                     <div class="product-img-wrapper">
-                        <img src="${product.image_url}" alt="${product.title}" loading="lazy">
+                        <a href="product.html?id=${product.id}">
+                            <img src="${product.image_url}" alt="${product.title}" loading="lazy">
+                        </a>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">${product.title}</h3>
+                        <a href="product.html?id=${product.id}" style="text-decoration:none; color:inherit;">
+                            <h3 class="product-title">${product.title}</h3>
+                        </a>
                         
                         <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem; flex-wrap:wrap;">
                             ${product.weight ? `<span style="background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:4px; font-size:0.8rem;">${product.weight}g</span>` : ''}
@@ -61,6 +65,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         <p class="product-desc">${product.description || ''}</p>
                         <div class="product-price">${priceDisplay}</div>
+                        
+                        <button onclick="addToCart('${product.id}')" class="btn btn-primary w-100" style="margin-top:0.5rem; width:100%;">Add to Cart</button>
                     </div>
                 </div>
             `;

@@ -291,7 +291,24 @@
         </div>
     </div>
 
-    <!-- 3. MANAGE PRODUCTS ACCORDION -->
+    <!-- 3. ORDERS ACCORDION -->
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span><i class="fas fa-shopping-bag"></i> Customer Orders</span>
+            <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+            <div style="padding:1rem 0;">
+                <button onclick="fetchOrders()" class="btn btn-outline btn-sm"><i class="fas fa-sync"></i> Refresh
+                    Orders</button>
+            </div>
+            <div id="orders-list" style="max-height: 500px; overflow-y: auto;">
+                <p style="text-align:center; color:#888;">Loading Orders...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. MANAGE PRODUCTS ACCORDION -->
     <div class="accordion-item">
         <div class="accordion-header" onclick="toggleAccordion(this)">
             <span><i class="fas fa-list"></i> Existing Products</span>
@@ -434,6 +451,7 @@
     <!-- External Scripts -->
     <script src="scripts/config.js?v=2"></script>
     <script src="scripts/admin.js?v=8"></script>
+    <script src="scripts/orders.js"></script>
 </body>
 
 </html>

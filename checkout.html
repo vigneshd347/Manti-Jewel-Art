@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Manti Jewel Art</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <h2
+                    style="font-family:'Playfair Display', serif; font-size:1.5rem; color:var(--color-accent-gold); margin:0; letter-spacing:1px;">
+                    MANTI JEWEL ART</h2>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Shop</a>
+                <a href="cart.html">Cart</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding: 4rem 1rem;">
+        <h1 class="page-title">Checkout</h1>
+        <div class="checkout-grid">
+            <!-- Form -->
+            <div class="checkout-form glass-card">
+                <h3>Shipping Details</h3>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="phone" required placeholder="+91 9876543210">
+                    </div>
+                    <div class="form-group">
+                        <label>Shipping Address</label>
+                        <textarea id="address" required placeholder="House No, Street, City, Pincode"
+                            rows="3"></textarea>
+                    </div>
+
+                    <h3 style="margin-top:2rem;">Payment Method: UPI / QR Code</h3>
+                    <div class="qr-code-box"
+                        style="text-align:center; padding:1rem; border:1px dashed #444; margin-bottom:1rem;">
+                        <p style="margin-bottom:10px;">Scan to Pay</p>
+                        <!-- PLACEHOLDER QR CODE - User needs to update this image -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=9092727655@upi&pn=MantiJewelArt"
+                            alt="Pay via UPI" style="border-radius:8px;">
+                        <p style="font-size:0.9rem; color:#888; margin-top:5px;">GPAY / PhonePe / Paytm</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">I Have Paid (Place Order)</button>
+                </form>
+            </div>
+
+            <!-- Summary -->
+            <div class="order-summary glass-card">
+                <h3>Order Summary</h3>
+                <div id="order-items"></div>
+                <hr style="border-color:rgba(255,255,255,0.1); margin:1rem 0;">
+                <div class="summary-row">
+                    <span>Total Amount</span>
+                    <span id="order-total" class="text-gold" style="font-size:1.5rem;">₹ 0</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--color-accent-gold);
+            text-align: center;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        @media(max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="scripts/supabase.js"></script>
+    <script src="scripts/checkout.js"></script>
+</body>
+
+</html>

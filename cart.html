@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Manti Jewel Art</title>
+    <!-- Fonts & Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <h2
+                    style="font-family:'Playfair Display', serif; font-size:1.5rem; color:var(--color-accent-gold); margin:0; letter-spacing:1px;">
+                    MANTI JEWEL ART</h2>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Shop</a>
+                <a href="cart.html" class="cart-link active"><i class="fas fa-shopping-cart"></i> Cart <span
+                        id="cart-count">0</span></a>
+            </div>
+            <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="container" style="padding: 4rem 1rem; min-height:80vh;">
+        <h1 class="page-title">Your Shopping Cart</h1>
+
+        <div class="cart-layout">
+            <!-- Left: Cart Items -->
+            <div id="cart-items" class="cart-items">
+                <p>Loading Cart...</p>
+            </div>
+
+            <!-- Right: Summary -->
+            <div class="cart-summary glass-card">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Total</span>
+                    <span id="cart-total" class="text-gold" style="font-size:1.5rem; font-weight:bold;">₹ 0</span>
+                </div>
+                <button onclick="window.location.href='checkout.html'" id="checkout-btn" class="btn btn-primary w-100"
+                    style="margin-top:2rem;">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Manti Jewel Art.</p>
+    </footer>
+
+    <style>
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--color-accent-gold);
+            text-align: center;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .cart-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-info {
+            flex: 1;
+        }
+
+        .cart-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+            color: white;
+        }
+
+        .cart-price {
+            color: var(--color-accent-gold);
+        }
+
+        .btn-remove {
+            background: none;
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff6b6b;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .cart-summary {
+            padding: 2rem;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        @media(max-width: 768px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="scripts/supabase.js"></script>
+    <script src="scripts/cart.js"></script>
+    <script>
+        // Render Cart
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            function render() {
+                if (cart.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; padding:2rem;">Your cart is empty. <a href="gallery.html" class="text-gold">Browse Shop</a></p>';
+                    totalEl.textContent = '₹ 0';
+                    checkoutBtn.disabled = true;
+                    checkoutBtn.style.opacity = 0.5;
+                    return;
+                }
+
+                checkoutBtn.disabled = false;
+                checkoutBtn.style.opacity = 1;
+
+                container.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image_url}" class="cart-img">
+                        <div class="cart-info">
+                            <a href="product.html?id=${item.id}" class="cart-title">${item.title}</a>
+                            <div class="cart-price">₹ ${item.price}</div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="btn-remove"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                `).join('');
+
+                const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+                totalEl.textContent = `₹ ${Math.round(total)}`;
+            }
+
+            // Hook into cart.js functions
+            const originalRemove = window.removeFromCart;
+            window.removeFromCart = (id) => {
+                cart = cart.filter(item => item.id !== id);
+                saveCart();
+                render();
+                updateCartCount();
+            };
+
+            render();
+        });
+    </script>
+</body>
+
+</html>
