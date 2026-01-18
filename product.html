@@ -40,9 +40,19 @@
     </nav>
 
     <!-- Product Section -->
-    <section class="container" style="padding: 4rem 1rem; min-height:80vh;">
+    <section class="container" style="padding: 4rem 1rem; min-height:60vh;">
         <div id="product-details" class="product-details-container">
             <div class="loading-spinner"><i class="fas fa-circle-notch fa-spin text-gold"></i> Loading Product...</div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="container" style="padding-bottom: 4rem;">
+        <h2 style="font-family:'Playfair Display',serif; color:#d4a017; margin-bottom:1.5rem; font-size:2rem;">You May
+            Also Like</h2>
+        <div id="related-grid"
+            style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:1.5rem;">
+            <!-- Injected via JS -->
         </div>
     </section>
 
@@ -156,6 +166,31 @@
                     </button>
                 </div>
             `;
+
+            // --- FETCH RELATED PRODUCTS ---
+            // Fetch 4 random products (naive approach: fetch latest 10 and pick 4)
+            const { data: related, error: relError } = await supabase
+                .from('products')
+                .select('*')
+                .neq('id', productId) // Exclude current
+                .limit(4);
+
+            if (related && related.length > 0) {
+                const relatedGrid = document.getElementById('related-grid');
+                relatedGrid.innerHTML = related.map(p => `
+                    <div class="product-card glass-card" style="border:1px solid rgba(255,255,255,0.1); border-radius:8px; overflow:hidden;">
+                        <div style="height:200px; overflow:hidden;">
+                             <a href="product.html?id=${p.id}"><img src="${p.image_url}" style="width:100%; height:100%; object-fit:cover;"></a>
+                        </div>
+                        <div style="padding:1rem;">
+                            <a href="product.html?id=${p.id}" style="text-decoration:none; color:white; font-weight:bold; display:block; margin-bottom:0.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.title}</a>
+                            <div style="color:var(--color-accent-gold); font-weight:bold;">₹ ${p.price > 0 ? p.price : 'On Request'}</div>
+                        </div>
+                    </div>
+                 `).join('');
+            } else {
+                document.getElementById('related-grid').innerHTML = '<p style="color:#666;">No similar items found.</p>';
+            }
         });
     </script>
 </body>
